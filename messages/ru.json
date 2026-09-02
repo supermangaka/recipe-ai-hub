@@ -2,5 +2,34 @@
   "HomePage": {
     "title": "Recipe AI Hub",
     "subtitle": "Сгенерируй рецепт из своих ингредиентов"
+  },
+  "GeneratePage": {
+    "heading": "Что есть на кухне?",
+    "ingredientLabel": "Ингредиент",
+    "ingredientPlaceholder": "например, нут",
+    "addIngredient": "Добавить ингредиент",
+    "removeIngredient": "Удалить",
+    "cuisineLabel": "Кухня",
+    "difficultyLabel": "Сложность",
+    "difficultyEasy": "Легко",
+    "difficultyMedium": "Средне",
+    "difficultyHard": "Сложно",
+    "submit": "Сгенерировать рецепт",
+    "generating": "Генерируем…",
+    "errorEmpty": "Добавь хотя бы один ингредиент",
+    "cuisineOptions": {
+      "any": "Любая",
+      "mediterranean": "Средиземноморская",
+      "asian": "Азиатская",
+      "mexican": "Мексиканская",
+      "italian": "Итальянская"
+    }
+  },
+  "Recipe": {
+    "servings": "Порций",
+    "cookTime": "Время готовки",
+    "minutes": "мин",
+    "ingredientsTitle": "Ингредиенты",
+    "instructionsTitle": "Инструкция"
   }
 }

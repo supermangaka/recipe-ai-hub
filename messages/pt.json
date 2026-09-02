@@ -2,5 +2,34 @@
   "HomePage": {
     "title": "Recipe AI Hub",
     "subtitle": "Gere uma receita a partir dos seus ingredientes"
+  },
+  "GeneratePage": {
+    "heading": "O que tem na sua cozinha?",
+    "ingredientLabel": "Ingrediente",
+    "ingredientPlaceholder": "ex: grão-de-bico",
+    "addIngredient": "Adicionar ingrediente",
+    "removeIngredient": "Remover",
+    "cuisineLabel": "Cozinha",
+    "difficultyLabel": "Dificuldade",
+    "difficultyEasy": "Fácil",
+    "difficultyMedium": "Médio",
+    "difficultyHard": "Difícil",
+    "submit": "Gerar receita",
+    "generating": "Gerando…",
+    "errorEmpty": "Adicione pelo menos um ingrediente",
+    "cuisineOptions": {
+      "any": "Qualquer",
+      "mediterranean": "Mediterrânea",
+      "asian": "Asiática",
+      "mexican": "Mexicana",
+      "italian": "Italiana"
+    }
+  },
+  "Recipe": {
+    "servings": "Porções",
+    "cookTime": "Tempo de preparo",
+    "minutes": "min",
+    "ingredientsTitle": "Ingredientes",
+    "instructionsTitle": "Modo de preparo"
   }
 }

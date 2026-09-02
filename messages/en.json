@@ -2,5 +2,34 @@
   "HomePage": {
     "title": "Recipe AI Hub",
     "subtitle": "Generate a recipe from your ingredients"
+  },
+  "GeneratePage": {
+    "heading": "What's in your kitchen?",
+    "ingredientLabel": "Ingredient",
+    "ingredientPlaceholder": "e.g. chickpeas",
+    "addIngredient": "Add ingredient",
+    "removeIngredient": "Remove",
+    "cuisineLabel": "Cuisine",
+    "difficultyLabel": "Difficulty",
+    "difficultyEasy": "Easy",
+    "difficultyMedium": "Medium",
+    "difficultyHard": "Hard",
+    "submit": "Generate recipe",
+    "generating": "Generating…",
+    "errorEmpty": "Add at least one ingredient",
+    "cuisineOptions": {
+      "any": "Any",
+      "mediterranean": "Mediterranean",
+      "asian": "Asian",
+      "mexican": "Mexican",
+      "italian": "Italian"
+    }
+  },
+  "Recipe": {
+    "servings": "Servings",
+    "cookTime": "Cook time",
+    "minutes": "min",
+    "ingredientsTitle": "Ingredients",
+    "instructionsTitle": "Instructions"
   }
 }
