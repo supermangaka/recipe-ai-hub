@@ -4,6 +4,7 @@
     "subtitle": "Gere uma receita a partir dos seus ingredientes"
   },
   "GeneratePage": {
+    "errorGeneration": "Não foi possível gerar a receita agora. Tente novamente.",
     "heading": "O que tem na sua cozinha?",
     "ingredientLabel": "Ingrediente",
     "ingredientPlaceholder": "ex: grão-de-bico",

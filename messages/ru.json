@@ -4,6 +4,7 @@
     "subtitle": "Сгенерируй рецепт из своих ингредиентов"
   },
   "GeneratePage": {
+    "errorGeneration": "Не удалось сгенерировать рецепт. Попробуй ещё раз.",
     "heading": "Что есть на кухне?",
     "ingredientLabel": "Ингредиент",
     "ingredientPlaceholder": "например, нут",

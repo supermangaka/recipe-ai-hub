@@ -4,6 +4,7 @@
     "subtitle": "Generate a recipe from your ingredients"
   },
   "GeneratePage": {
+    "errorGeneration": "Couldn't generate a recipe right now. Please try again.",
     "heading": "What's in your kitchen?",
     "ingredientLabel": "Ingredient",
     "ingredientPlaceholder": "e.g. chickpeas",
