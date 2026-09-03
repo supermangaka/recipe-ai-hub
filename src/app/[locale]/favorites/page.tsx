@@ -35,7 +35,7 @@ export default async function FavoritesPage() {
 
   return (
     <main className="min-h-screen bg-[#FAF6EE] px-4 py-12">
-      <div className="max-w-2xl mx-auto flex flex-col gap-10">
+      <div className="max-w-2xl mx-auto flex flex-col gap-10 min-w-0">
         <h1 className="font-serif text-3xl text-[#1F3327]">{t('heading')}</h1>
 
         {favorites.length === 0 ? (

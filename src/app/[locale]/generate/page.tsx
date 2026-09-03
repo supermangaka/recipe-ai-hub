@@ -112,7 +112,7 @@ export default function GeneratePage() {
 
   return (
     <main className="min-h-screen bg-[#FAF6EE] px-4 py-12">
-      <div className="max-w-2xl mx-auto flex flex-col gap-10">
+      <div className="max-w-2xl mx-auto flex flex-col gap-10 min-w-0">
         <h1 className="font-serif text-3xl text-[#1F3327]">{t('heading')}</h1>
         <RecipeForm onSubmit={handleSubmit} isLoading={isLoading} />
         {error && <p className="text-sm text-red-600">{error}</p>}

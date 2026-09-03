@@ -17,7 +17,7 @@ export function RecipeVariants({ versions, activeIndex, onSelectVersion, onRefin
   const t = useTranslations('GeneratePage');
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 min-w-0">
       {versions.length > 1 && (
         <div className="flex flex-wrap gap-2 border-b border-[#8A8371] pb-2">
           {versions.map((version, index) => (

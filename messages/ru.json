@@ -1,7 +1,17 @@
 {
   "HomePage": {
     "title": "Recipe AI Hub",
-    "subtitle": "Сгенерируй рецепт из своих ингредиентов"
+    "subtitle": "Сгенерируй рецепт из своих ингредиентов",
+    "loggedInAs": "Вошёл как {email}",
+    "startGenerating": "Начать генерацию",
+    "signOut": "Выйти",
+    "signInWithGoogle": "Войти через Google"
+  },
+  "Nav": {
+    "generate": "Генерация",
+    "favorites": "Избранное",
+    "languageLabel": "Язык",
+    "menuLabel": "Меню"
   },
   "GeneratePage": {
     "errorGeneration": "Не удалось сгенерировать рецепт. Попробуй ещё раз.",

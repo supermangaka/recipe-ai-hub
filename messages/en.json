@@ -1,7 +1,17 @@
 {
   "HomePage": {
     "title": "Recipe AI Hub",
-    "subtitle": "Generate a recipe from your ingredients"
+    "subtitle": "Generate a recipe from your ingredients",
+    "loggedInAs": "Signed in as {email}",
+    "startGenerating": "Start generating",
+    "signOut": "Sign out",
+    "signInWithGoogle": "Sign in with Google"
+  },
+  "Nav": {
+    "generate": "Generate",
+    "favorites": "Favorites",
+    "languageLabel": "Language",
+    "menuLabel": "Menu"
   },
   "GeneratePage": {
     "errorGeneration": "Couldn't generate a recipe right now. Please try again.",

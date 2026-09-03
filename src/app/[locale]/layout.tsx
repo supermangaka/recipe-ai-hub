@@ -3,6 +3,8 @@ import { getMessages } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import { Fraunces, Inter } from 'next/font/google';
+import { auth } from '@/lib/auth';
+import { Navbar } from '@/components/Navbar';
 import '../globals.css';
 
 const fraunces = Fraunces({ subsets: ['latin'], variable: '--font-serif' });
@@ -25,11 +27,13 @@ export default async function LocaleLayout({
   }
 
   const messages = await getMessages();
+  const session = await auth();
 
   return (
     <html lang={locale} className={`${fraunces.variable} ${inter.variable}`}>
       <body className="font-sans">
         <NextIntlClientProvider messages={messages}>
+          <Navbar isAuthenticated={!!session?.user} />
           {children}
         </NextIntlClientProvider>
       </body>

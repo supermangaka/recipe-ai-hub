@@ -28,3 +28,7 @@ body {
 .font-serif {
   font-family: var(--font-serif), serif;
 }
+
+html, body {
+  overflow-x: hidden;
+}

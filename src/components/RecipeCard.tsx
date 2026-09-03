@@ -13,7 +13,7 @@ export function RecipeCard({ recipe, onFavorite, isFavorited, isSavingFavorite }
 
   return (
     <div className="border border-dashed border-[#8A8371] p-6 flex flex-col gap-6">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h2 className="font-serif text-2xl text-[#1F3327]">{recipe.title}</h2>
           <div className="flex gap-4 mt-2 text-sm text-[#8A8371]">
