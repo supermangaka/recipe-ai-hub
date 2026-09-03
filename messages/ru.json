@@ -30,7 +30,14 @@
     "modeFreeformLabel": "Из остатков",
     "freeformLabel": "Что есть в холодильнике?",
     "freeformPlaceholder": "например: половина луковицы, немного риса, остатки курицы...",
-    "errorEmptyFreeform": "Опиши, что у тебя есть"
+    "errorEmptyFreeform": "Опиши, что у тебя есть",
+    "versionOriginal": "Оригинал",
+    "variant_spicier": "Острее",
+    "variant_simpler": "Проще",
+    "variant_faster": "Быстрее",
+    "variant_healthier": "Полезнее",
+    "refining": "Дорабатываем…",
+    "errorRefine": "Не удалось доработать рецепт. Попробуй ещё раз."
   },
   "Recipe": {
     "servings": "Порций",

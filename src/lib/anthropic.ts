@@ -1,5 +1,5 @@
 import Groq from 'groq-sdk';
-import { Recipe, Difficulty } from '@/types/recipe';
+import { Recipe, Difficulty, RefineVariant } from '@/types/recipe';
 
 if (!process.env.GROQ_API_KEY) {
   throw new Error('GROQ_API_KEY is not set in environment variables');
@@ -13,7 +13,8 @@ const MODEL = 'openai/gpt-oss-120b';
 
 export type GenerateRecipeInput =
   | { mode: 'list'; ingredients: string[]; cuisine: string; difficulty: Difficulty; locale: string }
-  | { mode: 'freeform'; description: string; cuisine: string; difficulty: Difficulty; locale: string };
+  | { mode: 'freeform'; description: string; cuisine: string; difficulty: Difficulty; locale: string }
+  | { mode: 'refine'; baseRecipe: Recipe; variant: RefineVariant; locale: string };
 
 const localeNames: Record<string, string> = {
   en: 'English',
@@ -21,17 +22,38 @@ const localeNames: Record<string, string> = {
   pt: 'Portuguese',
 };
 
+export const REFINEMENT_INSTRUCTIONS: Record<RefineVariant, string> = {
+  spicier: 'Make it noticeably spicier — increase existing spicy elements or add appropriate ones.',
+  simpler: 'Simplify it — fewer steps, simpler techniques, fewer specialized ingredients.',
+  faster: 'Make it faster to cook — reduce total cook time and number of steps where possible.',
+  healthier: 'Make it healthier — reduce heavy or fatty ingredients, add more vegetables where sensible.',
+};
+
 function buildPrompt(input: GenerateRecipeInput): string {
   const languageName = localeNames[input.locale] ?? 'English';
 
-  const sourceInstruction =
-    input.mode === 'list'
-      ? `Create a recipe using these ingredients: ${input.ingredients.join(', ')}.`
-      : `The user described what they have available in loose, informal terms: "${input.description}". Infer a reasonable, specific ingredient list from this description (assume common pantry staples like salt, oil, and water are available unless the description suggests otherwise).`;
+  let sourceInstruction: string;
+
+  if (input.mode === 'list') {
+    sourceInstruction = `Create a recipe using these ingredients: ${input.ingredients.join(', ')}.
+Cuisine preference: ${input.cuisine === 'any' ? 'no preference' : input.cuisine}.
+Difficulty: ${input.difficulty}.`;
+  } else if (input.mode === 'freeform') {
+    sourceInstruction = `The user described what they have available in loose, informal terms: "${input.description}". Infer a reasonable, specific ingredient list from this description (assume common pantry staples like salt, oil, and water are available unless the description suggests otherwise).
+Cuisine preference: ${input.cuisine === 'any' ? 'no preference' : input.cuisine}.
+Difficulty: ${input.difficulty}.`;
+  } else {
+    sourceInstruction = `Take this existing recipe and modify it: ${REFINEMENT_INSTRUCTIONS[input.variant]}
+
+Original recipe:
+Title: ${input.baseRecipe.title}
+Ingredients: ${input.baseRecipe.ingredients.join(', ')}
+Instructions: ${input.baseRecipe.instructions.join(' ')}
+
+Return the full modified recipe, keeping the same overall dish concept unless the instruction requires otherwise.`;
+  }
 
   return `You are a recipe generator. ${sourceInstruction}
-Cuisine preference: ${input.cuisine === 'any' ? 'no preference' : input.cuisine}.
-Difficulty: ${input.difficulty}.
 
 Respond ONLY with valid JSON, no markdown formatting, no code fences, no extra text. The JSON must match this exact shape:
 {

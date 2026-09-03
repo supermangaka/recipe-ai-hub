@@ -30,7 +30,14 @@
     "modeFreeformLabel": "From leftovers",
     "freeformLabel": "What's in your fridge?",
     "freeformPlaceholder": "e.g. half an onion, some rice, leftover roast chicken...",
-    "errorEmptyFreeform": "Describe what you have"
+    "errorEmptyFreeform": "Describe what you have",
+    "versionOriginal": "Original",
+    "variant_spicier": "Spicier",
+    "variant_simpler": "Simpler",
+    "variant_faster": "Faster",
+    "variant_healthier": "Healthier",
+    "refining": "Refining…",
+    "errorRefine": "Couldn't refine the recipe. Please try again."
   },
   "Recipe": {
     "servings": "Servings",

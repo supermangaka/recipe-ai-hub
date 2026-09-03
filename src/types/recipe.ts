@@ -13,3 +13,10 @@ export type Recipe = {
 export type RecipeFormValues =
   | { mode: 'list'; ingredients: string[]; cuisine: string; difficulty: Difficulty }
   | { mode: 'freeform'; description: string; cuisine: string; difficulty: Difficulty };
+
+export type RefineVariant = 'spicier' | 'simpler' | 'faster' | 'healthier';
+
+export type RecipeVersion = {
+  label: RefineVariant | 'original';
+  recipe: Recipe;
+};

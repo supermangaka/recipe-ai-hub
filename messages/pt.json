@@ -30,7 +30,14 @@
     "modeFreeformLabel": "Com sobras",
     "freeformLabel": "O que tem na sua geladeira?",
     "freeformPlaceholder": "ex: meia cebola, um pouco de arroz, sobra de frango assado...",
-    "errorEmptyFreeform": "Descreva o que você tem"
+    "errorEmptyFreeform": "Descreva o que você tem",
+    "versionOriginal": "Original",
+    "variant_spicier": "Mais picante",
+    "variant_simpler": "Mais simples",
+    "variant_faster": "Mais rápido",
+    "variant_healthier": "Mais saudável",
+    "refining": "Ajustando…",
+    "errorRefine": "Não foi possível ajustar a receita. Tente novamente."
   },
   "Recipe": {
     "servings": "Porções",
