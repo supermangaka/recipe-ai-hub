@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Difficulty, RecipeFormValues } from '@/types/recipe';
 import { ErrorBanner } from './ErrorBanner';
 import { Spinner } from './Spinner';
+import { Select } from './Select';
 
 type Mode = 'list' | 'freeform';
 
@@ -130,37 +131,33 @@ export function RecipeForm({ onSubmit, isLoading }: Props) {
 
       <div className="grid grid-cols-2 gap-4">
         <div className="flex flex-col gap-1">
-          <label htmlFor="cuisine" className="text-sm text-[#8A8371]">
-            {t('cuisineLabel')}
-          </label>
-          <select
-            id="cuisine"
+          <span className="text-sm text-[#8A8371]">{t('cuisineLabel')}</span>
+          <Select
             value={cuisine}
-            onChange={(e) => setCuisine(e.target.value)}
-            className="border border-[#8A8371] bg-transparent px-2 py-2 text-[#1F3327]"
-          >
-            <option value="any">{t('cuisineOptions.any')}</option>
-            <option value="mediterranean">{t('cuisineOptions.mediterranean')}</option>
-            <option value="asian">{t('cuisineOptions.asian')}</option>
-            <option value="mexican">{t('cuisineOptions.mexican')}</option>
-            <option value="italian">{t('cuisineOptions.italian')}</option>
-          </select>
+            onChange={setCuisine}
+            label={t('cuisineLabel')}
+            options={[
+              { value: 'any', label: t('cuisineOptions.any') },
+              { value: 'mediterranean', label: t('cuisineOptions.mediterranean') },
+              { value: 'asian', label: t('cuisineOptions.asian') },
+              { value: 'mexican', label: t('cuisineOptions.mexican') },
+              { value: 'italian', label: t('cuisineOptions.italian') },
+            ]}
+          />
         </div>
 
         <div className="flex flex-col gap-1">
-          <label htmlFor="difficulty" className="text-sm text-[#8A8371]">
-            {t('difficultyLabel')}
-          </label>
-          <select
-            id="difficulty"
+          <span className="text-sm text-[#8A8371]">{t('difficultyLabel')}</span>
+          <Select
             value={difficulty}
-            onChange={(e) => setDifficulty(e.target.value as Difficulty)}
-            className="border border-[#8A8371] bg-transparent px-2 py-2 text-[#1F3327]"
-          >
-            <option value="easy">{t('difficultyEasy')}</option>
-            <option value="medium">{t('difficultyMedium')}</option>
-            <option value="hard">{t('difficultyHard')}</option>
-          </select>
+            onChange={(v) => setDifficulty(v as Difficulty)}
+            label={t('difficultyLabel')}
+            options={[
+              { value: 'easy', label: t('difficultyEasy') },
+              { value: 'medium', label: t('difficultyMedium') },
+              { value: 'hard', label: t('difficultyHard') },
+            ]}
+          />
         </div>
       </div>
 

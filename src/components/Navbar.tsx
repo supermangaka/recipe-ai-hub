@@ -3,6 +3,7 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { Link, usePathname, useRouter } from '@/i18n/navigation';
 import { useState } from 'react';
+import { Select } from './Select';
 
 const LOCALES = ['en', 'ru', 'pt'] as const;
 
@@ -36,18 +37,13 @@ export function Navbar({ isAuthenticated }: { isAuthenticated: boolean }) {
               </Link>
             </>
           )}
-          <select
+          <Select
             value={locale}
-            onChange={(e) => switchLocale(e.target.value)}
-            className="text-sm border border-[#8A8371] bg-transparent px-2 py-1 text-[#1F3327]"
-            aria-label={t('languageLabel')}
-          >
-            {LOCALES.map((l) => (
-              <option key={l} value={l}>
-                {l.toUpperCase()}
-              </option>
-            ))}
-          </select>
+            onChange={switchLocale}
+            label={t('languageLabel')}
+            className="w-24 self-start"
+            options={LOCALES.map((l) => ({ value: l, label: l.toUpperCase() }))}
+          />
         </div>
 
         {/* Mobile menu button */}
@@ -86,7 +82,7 @@ export function Navbar({ isAuthenticated }: { isAuthenticated: boolean }) {
           <select
             value={locale}
             onChange={(e) => switchLocale(e.target.value)}
-            className="text-sm border border-[#8A8371] bg-transparent px-2 py-1 text-[#1F3327] self-start"
+            className="text-sm border border-[#8A8371] bg-transparent px-2 py-1 text-[#1F3327]"
             aria-label={t('languageLabel')}
           >
             {LOCALES.map((l) => (
