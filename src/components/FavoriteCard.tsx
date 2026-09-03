@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { RecipeCard } from './RecipeCard';
 import { Recipe } from '@/types/recipe';
+import { ErrorBanner } from './ErrorBanner';
 
 export function FavoriteCard({ favoriteId, recipe }: { favoriteId: string; recipe: Recipe }) {
   const t = useTranslations('FavoritesPage');
@@ -37,7 +38,7 @@ export function FavoriteCard({ favoriteId, recipe }: { favoriteId: string; recip
       >
         {isRemoving ? t('removing') : t('remove')}
       </button>
-      {error && <p className="text-sm text-red-600">{t('errorRemove')}</p>}
+      {error && <ErrorBanner message={t('errorRemove')} />}
     </div>
   );
 }

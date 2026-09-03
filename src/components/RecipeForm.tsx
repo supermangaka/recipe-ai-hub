@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Difficulty, RecipeFormValues } from '@/types/recipe';
+import { ErrorBanner } from './ErrorBanner';
+import { Spinner } from './Spinner';
 
 type Mode = 'list' | 'freeform';
 
@@ -124,7 +126,7 @@ export function RecipeForm({ onSubmit, isLoading }: Props) {
         </div>
       )}
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <ErrorBanner message={error} />}
 
       <div className="grid grid-cols-2 gap-4">
         <div className="flex flex-col gap-1">
@@ -165,8 +167,9 @@ export function RecipeForm({ onSubmit, isLoading }: Props) {
       <button
         type="submit"
         disabled={isLoading}
-        className="bg-[#1F3327] text-[#FAF6EE] py-3 font-medium hover:bg-[#16241C] disabled:opacity-50 disabled:cursor-not-allowed"
+        className="bg-[#1F3327] text-[#FAF6EE] py-3 font-medium hover:bg-[#16241C] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
+        {isLoading && <Spinner />}
         {isLoading ? t('generating') : t('submit')}
       </button>
     </form>

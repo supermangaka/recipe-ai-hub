@@ -6,6 +6,7 @@ import { RecipeForm } from '@/components/RecipeForm';
 import { RecipeCard } from '@/components/RecipeCard';
 import { RecipeVariants } from '@/components/RecipeVariants';
 import { Recipe, RecipeFormValues, RecipeVersion, RefineVariant } from '@/types/recipe';
+import { ErrorBanner } from '@/components/ErrorBanner';
 
 export default function GeneratePage() {
   const t = useTranslations('GeneratePage');
@@ -115,7 +116,7 @@ export default function GeneratePage() {
       <div className="max-w-2xl mx-auto flex flex-col gap-10 min-w-0">
         <h1 className="font-serif text-3xl text-[#1F3327]">{t('heading')}</h1>
         <RecipeForm onSubmit={handleSubmit} isLoading={isLoading} />
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <ErrorBanner message={error} />}
 
         {activeRecipe && (
           <div className="flex flex-col gap-4">

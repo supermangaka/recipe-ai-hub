@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import { Recipe } from '@/types/recipe';
+import { Spinner } from './Spinner';
 
 type Props = {
   recipe: Recipe;
@@ -27,8 +28,9 @@ export function RecipeCard({ recipe, onFavorite, isFavorited, isSavingFavorite }
             type="button"
             onClick={onFavorite}
             disabled={isFavorited || isSavingFavorite}
-            className="shrink-0 text-sm border border-[#8A8371] px-3 py-1.5 text-[#1F3327] hover:border-[#D99A2B] disabled:opacity-50 disabled:cursor-default"
+            className="shrink-0 text-sm border border-[#8A8371] px-3 py-1.5 text-[#1F3327] hover:border-[#D99A2B] disabled:opacity-50 disabled:cursor-default flex items-center gap-2"
           >
+            {isSavingFavorite && <Spinner />}
             {isFavorited ? t('favorited') : isSavingFavorite ? t('saving') : t('addToFavorites')}
           </button>
         )}

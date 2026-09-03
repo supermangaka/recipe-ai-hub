@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { RecipeVersion, RefineVariant } from '@/types/recipe';
+import { Spinner } from './Spinner';
 
 const VARIANTS: RefineVariant[] = ['spicier', 'simpler', 'faster', 'healthier'];
 
@@ -25,11 +26,10 @@ export function RecipeVariants({ versions, activeIndex, onSelectVersion, onRefin
               key={index}
               type="button"
               onClick={() => onSelectVersion(index)}
-              className={`px-3 py-1 text-sm ${
-                index === activeIndex
+              className={`px-3 py-1 text-sm ${index === activeIndex
                   ? 'bg-[#1F3327] text-[#FAF6EE]'
                   : 'text-[#8A8371] hover:text-[#1F3327]'
-              }`}
+                }`}
             >
               {version.label === 'original' ? t('versionOriginal') : t(`variant_${version.label}`)}
             </button>
@@ -44,8 +44,9 @@ export function RecipeVariants({ versions, activeIndex, onSelectVersion, onRefin
             type="button"
             onClick={() => onRefine(variant)}
             disabled={isRefining}
-            className="text-sm border border-[#8A8371] px-3 py-1.5 text-[#1F3327] hover:border-[#D99A2B] disabled:opacity-50"
+            className="text-sm border border-[#8A8371] px-3 py-1.5 text-[#1F3327] hover:border-[#D99A2B] disabled:opacity-50 flex items-center gap-2"
           >
+            {isRefining && <Spinner />}
             {isRefining ? t('refining') : t(`variant_${variant}`)}
           </button>
         ))}
