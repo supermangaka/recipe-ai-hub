@@ -5,6 +5,8 @@
   },
   "GeneratePage": {
     "errorGeneration": "Не удалось сгенерировать рецепт. Попробуй ещё раз.",
+    "errorEmpty": "Добавь хотя бы один ингредиент",
+    "errorFavorite": "Не удалось сохранить в избранное. Попробуй ещё раз.",
     "heading": "Что есть на кухне?",
     "ingredientLabel": "Ингредиент",
     "ingredientPlaceholder": "например, нут",
@@ -17,7 +19,6 @@
     "difficultyHard": "Сложно",
     "submit": "Сгенерировать рецепт",
     "generating": "Генерируем…",
-    "errorEmpty": "Добавь хотя бы один ингредиент",
     "cuisineOptions": {
       "any": "Любая",
       "mediterranean": "Средиземноморская",
@@ -31,6 +32,16 @@
     "cookTime": "Время готовки",
     "minutes": "мин",
     "ingredientsTitle": "Ингредиенты",
-    "instructionsTitle": "Инструкция"
+    "instructionsTitle": "Инструкция",
+    "addToFavorites": "В избранное",
+    "favorited": "Сохранено ✓",
+    "saving": "Сохраняем…"
+  },
+  "FavoritesPage": {
+    "heading": "Избранное",
+    "empty": "Пока нет сохранённых рецептов — сгенерируй что-нибудь!",
+    "remove": "Удалить",
+    "removing": "Удаляем…",
+    "errorRemove": "Не удалось удалить. Попробуй ещё раз."
   }
 }

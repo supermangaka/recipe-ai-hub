@@ -3,6 +3,7 @@ import { auth } from '@/lib/auth';
 import { generateRecipe } from '@/lib/anthropic';
 import { getMockRecipe } from '@/lib/mock-recipe';
 import { Difficulty } from '@/types/recipe';
+import { supabaseAdmin } from '@/lib/supabase-admin';
 
 const VALID_DIFFICULTIES: Difficulty[] = ['easy', 'medium', 'hard'];
 const VALID_LOCALES = ['en', 'ru', 'pt'];
@@ -15,59 +16,60 @@ export async function POST(request: NextRequest) {
   }
 
   let body: unknown;
-
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  const { ingredients, cuisine, difficulty, locale } = body as Record<string, unknown>;
+  const { title, ingredients, instructions, cookTimeMinutes, servings, cuisine, difficulty, locale, rawPrompt } =
+    body as Record<string, unknown>;
 
   if (
+    typeof title !== 'string' ||
     !Array.isArray(ingredients) ||
-    ingredients.length === 0 ||
-    !ingredients.every((i) => typeof i === 'string' && i.trim().length > 0)
+    !Array.isArray(instructions) ||
+    typeof cookTimeMinutes !== 'number' ||
+    typeof servings !== 'number'
   ) {
-    return NextResponse.json(
-      { error: 'ingredients must be a non-empty array of non-empty strings' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Invalid recipe payload' }, { status: 400 });
   }
 
-  if (typeof cuisine !== 'string' || cuisine.trim().length === 0) {
-    return NextResponse.json({ error: 'cuisine is required' }, { status: 400 });
+  const { data: recipe, error: recipeError } = await supabaseAdmin
+    .from('recipes')
+    .insert({
+      created_by: session.user.id,
+      title,
+      ingredients,
+      instructions,
+      cook_time_minutes: cookTimeMinutes,
+      servings,
+      cuisine: typeof cuisine === 'string' ? cuisine : 'any',
+      difficulty: typeof difficulty === 'string' ? difficulty : 'easy',
+      locale: typeof locale === 'string' ? locale : 'en',
+      raw_prompt: typeof rawPrompt === 'string' ? rawPrompt : null,
+    })
+    .select()
+    .single();
+
+  if (recipeError || !recipe) {
+    console.error('Failed to save recipe:', recipeError);
+    return NextResponse.json({ error: 'Failed to save recipe' }, { status: 500 });
   }
 
-  if (typeof difficulty !== 'string' || !VALID_DIFFICULTIES.includes(difficulty as Difficulty)) {
-    return NextResponse.json({ error: 'difficulty must be easy, medium, or hard' }, { status: 400 });
+  const { data: favorite, error: favoriteError } = await supabaseAdmin
+    .from('favorites')
+    .insert({
+      user_id: session.user.id,
+      recipe_id: recipe.id,
+    })
+    .select()
+    .single();
+
+  if (favoriteError) {
+    console.error('Failed to add favorite:', favoriteError);
+    return NextResponse.json({ error: 'Failed to add favorite' }, { status: 500 });
   }
 
-  if (typeof locale !== 'string' || !VALID_LOCALES.includes(locale)) {
-    return NextResponse.json({ error: 'locale must be en, ru, or pt' }, { status: 400 });
-  }
-
-  const cleanedIngredients = ingredients.map((i) => i.trim());
-
-  if (process.env.USE_MOCK_RECIPES === 'true') {
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return NextResponse.json({ recipe: getMockRecipe(cleanedIngredients, locale) });
-  }
-
-  try {
-    const recipe = await generateRecipe({
-      ingredients: cleanedIngredients,
-      cuisine,
-      difficulty: difficulty as Difficulty,
-      locale,
-    });
-
-    return NextResponse.json({ recipe });
-  } catch (error) {
-    console.error('Recipe generation failed:', error);
-    return NextResponse.json(
-      { error: 'Failed to generate recipe. Please try again.' },
-      { status: 502 }
-    );
-  }
+  return NextResponse.json({ favorite, recipe }, { status: 201 });
 }

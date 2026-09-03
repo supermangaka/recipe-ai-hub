@@ -10,12 +10,16 @@ export default function GeneratePage() {
   const t = useTranslations('GeneratePage');
   const locale = useLocale();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [lastValues, setLastValues] = useState<RecipeFormValues | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [isSavingFavorite, setIsSavingFavorite] = useState(false);
 
   async function handleSubmit(values: RecipeFormValues) {
     setIsLoading(true);
     setError(null);
+    setIsFavorited(false);
 
     try {
       const response = await fetch('/api/recipes/generate', {
@@ -31,10 +35,44 @@ export default function GeneratePage() {
 
       const data = await response.json();
       setRecipe(data.recipe);
+      setLastValues(values);
     } catch {
       setError(t('errorGeneration'));
     } finally {
       setIsLoading(false);
+    }
+  }
+
+  async function handleFavorite() {
+    if (!recipe || !lastValues) return;
+    setIsSavingFavorite(true);
+
+    try {
+      const response = await fetch('/api/favorites', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: recipe.title,
+          ingredients: recipe.ingredients,
+          instructions: recipe.instructions,
+          cookTimeMinutes: recipe.cookTimeMinutes,
+          servings: recipe.servings,
+          cuisine: recipe.cuisine,
+          difficulty: recipe.difficulty,
+          locale,
+          rawPrompt: lastValues.ingredients.join(', '),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save favorite');
+      }
+
+      setIsFavorited(true);
+    } catch {
+      setError(t('errorFavorite'));
+    } finally {
+      setIsSavingFavorite(false);
     }
   }
 
@@ -44,7 +82,14 @@ export default function GeneratePage() {
         <h1 className="font-serif text-3xl text-[#1F3327]">{t('heading')}</h1>
         <RecipeForm onSubmit={handleSubmit} isLoading={isLoading} />
         {error && <p className="text-sm text-red-600">{error}</p>}
-        {recipe && <RecipeCard recipe={recipe} />}
+        {recipe && (
+          <RecipeCard
+            recipe={recipe}
+            onFavorite={handleFavorite}
+            isFavorited={isFavorited}
+            isSavingFavorite={isSavingFavorite}
+          />
+        )}
       </div>
     </main>
   );

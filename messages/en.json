@@ -5,6 +5,8 @@
   },
   "GeneratePage": {
     "errorGeneration": "Couldn't generate a recipe right now. Please try again.",
+    "errorEmpty": "Add at least one ingredient",
+    "errorFavorite": "Couldn't save to favorites. Please try again.",
     "heading": "What's in your kitchen?",
     "ingredientLabel": "Ingredient",
     "ingredientPlaceholder": "e.g. chickpeas",
@@ -17,7 +19,6 @@
     "difficultyHard": "Hard",
     "submit": "Generate recipe",
     "generating": "Generating…",
-    "errorEmpty": "Add at least one ingredient",
     "cuisineOptions": {
       "any": "Any",
       "mediterranean": "Mediterranean",
@@ -31,6 +32,9 @@
     "cookTime": "Cook time",
     "minutes": "min",
     "ingredientsTitle": "Ingredients",
-    "instructionsTitle": "Instructions"
+    "instructionsTitle": "Instructions",
+    "addToFavorites": "Save to favorites",
+    "favorited": "Saved ✓",
+    "saving": "Saving…"
   }
 }

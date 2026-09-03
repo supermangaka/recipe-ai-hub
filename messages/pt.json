@@ -5,6 +5,8 @@
   },
   "GeneratePage": {
     "errorGeneration": "Não foi possível gerar a receita agora. Tente novamente.",
+    "errorEmpty": "Adicione pelo menos um ingrediente",
+    "errorFavorite": "Não foi possível salvar nos favoritos. Tente novamente.",
     "heading": "O que tem na sua cozinha?",
     "ingredientLabel": "Ingrediente",
     "ingredientPlaceholder": "ex: grão-de-bico",
@@ -17,7 +19,6 @@
     "difficultyHard": "Difícil",
     "submit": "Gerar receita",
     "generating": "Gerando…",
-    "errorEmpty": "Adicione pelo menos um ingrediente",
     "cuisineOptions": {
       "any": "Qualquer",
       "mediterranean": "Mediterrânea",
@@ -31,6 +32,16 @@
     "cookTime": "Tempo de preparo",
     "minutes": "min",
     "ingredientsTitle": "Ingredientes",
-    "instructionsTitle": "Modo de preparo"
+    "instructionsTitle": "Modo de preparo",
+    "addToFavorites": "Salvar nos favoritos",
+    "favorited": "Salvo ✓",
+    "saving": "Salvando…"
+  },
+  "FavoritesPage": {
+    "heading": "Seus favoritos",
+    "empty": "Nenhuma receita salva ainda — gere uma!",
+    "remove": "Remover",
+    "removing": "Removendo…",
+    "errorRemove": "Não foi possível remover. Tente novamente."
   }
 }
