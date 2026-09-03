@@ -22,17 +22,27 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  const { ingredients, cuisine, difficulty, locale } = body as Record<string, unknown>;
+  const { mode, ingredients, description, cuisine, difficulty, locale } = body as Record<string, unknown>;
 
-  if (
-    !Array.isArray(ingredients) ||
-    ingredients.length === 0 ||
-    !ingredients.every((i) => typeof i === 'string' && i.trim().length > 0)
-  ) {
-    return NextResponse.json(
-      { error: 'ingredients must be a non-empty array of non-empty strings' },
-      { status: 400 }
-    );
+  if (mode !== 'list' && mode !== 'freeform') {
+    return NextResponse.json({ error: 'mode must be "list" or "freeform"' }, { status: 400 });
+  }
+
+  if (mode === 'list') {
+    if (
+      !Array.isArray(ingredients) ||
+      ingredients.length === 0 ||
+      !ingredients.every((i) => typeof i === 'string' && i.trim().length > 0)
+    ) {
+      return NextResponse.json(
+        { error: 'ingredients must be a non-empty array of non-empty strings' },
+        { status: 400 }
+      );
+    }
+  } else {
+    if (typeof description !== 'string' || description.trim().length === 0) {
+      return NextResponse.json({ error: 'description must be a non-empty string' }, { status: 400 });
+    }
   }
 
   if (typeof cuisine !== 'string' || cuisine.trim().length === 0) {
@@ -47,20 +57,29 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'locale must be en, ru, or pt' }, { status: 400 });
   }
 
-  const cleanedIngredients = ingredients.map((i) => i.trim());
-
   if (process.env.USE_MOCK_RECIPES === 'true') {
     await new Promise((resolve) => setTimeout(resolve, 500));
-    return NextResponse.json({ recipe: getMockRecipe(cleanedIngredients, locale) });
+    const mockIngredients = mode === 'list' ? (ingredients as string[]).map((i) => i.trim()) : null;
+    return NextResponse.json({ recipe: getMockRecipe(mockIngredients, locale) });
   }
 
   try {
-    const recipe = await generateRecipe({
-      ingredients: cleanedIngredients,
-      cuisine,
-      difficulty: difficulty as Difficulty,
-      locale,
-    });
+    const recipe =
+      mode === 'list'
+        ? await generateRecipe({
+            mode: 'list',
+            ingredients: (ingredients as string[]).map((i) => i.trim()),
+            cuisine,
+            difficulty: difficulty as Difficulty,
+            locale,
+          })
+        : await generateRecipe({
+            mode: 'freeform',
+            description: (description as string).trim(),
+            cuisine,
+            difficulty: difficulty as Difficulty,
+            locale,
+          });
 
     return NextResponse.json({ recipe });
   } catch (error) {

@@ -25,7 +25,12 @@
       "asian": "Asiática",
       "mexican": "Mexicana",
       "italian": "Italiana"
-    }
+    },
+    "modeListLabel": "Por ingredientes",
+    "modeFreeformLabel": "Com sobras",
+    "freeformLabel": "O que tem na sua geladeira?",
+    "freeformPlaceholder": "ex: meia cebola, um pouco de arroz, sobra de frango assado...",
+    "errorEmptyFreeform": "Descreva o que você tem"
   },
   "Recipe": {
     "servings": "Porções",

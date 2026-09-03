@@ -25,7 +25,12 @@
       "asian": "Asian",
       "mexican": "Mexican",
       "italian": "Italian"
-    }
+    },
+    "modeListLabel": "By ingredients",
+    "modeFreeformLabel": "From leftovers",
+    "freeformLabel": "What's in your fridge?",
+    "freeformPlaceholder": "e.g. half an onion, some rice, leftover roast chicken...",
+    "errorEmptyFreeform": "Describe what you have"
   },
   "Recipe": {
     "servings": "Servings",
@@ -36,5 +41,12 @@
     "addToFavorites": "Save to favorites",
     "favorited": "Saved ✓",
     "saving": "Saving…"
+  },
+  "FavoritesPage": {
+    "heading": "Your favorites",
+    "empty": "No saved recipes yet — go generate one!",
+    "remove": "Remove",
+    "removing": "Removing…",
+    "errorRemove": "Couldn't remove. Please try again."
   }
 }

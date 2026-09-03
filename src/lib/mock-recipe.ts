@@ -47,10 +47,11 @@ const mockContent: Record<string, MockRecipeContent> = {
   },
 };
 
-export function getMockRecipe(ingredients: string[], locale: string): Recipe {
+export function getMockRecipe(ingredients: string[] | null, locale: string): Recipe {
   const content = mockContent[locale] ?? mockContent.en;
+  const list = ingredients && ingredients.length > 0 ? ingredients : ['chickpeas', 'spinach', 'garlic', 'tomato'];
   return {
     ...content,
-    ingredients: ingredients.length > 0 ? ingredients : ['chickpeas', 'spinach', 'garlic', 'tomato'],
+    ingredients: list,
   };
 }

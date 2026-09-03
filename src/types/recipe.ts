@@ -9,3 +9,7 @@ export type Recipe = {
   ingredients: string[];
   instructions: string[];
 };
+
+export type RecipeFormValues =
+  | { mode: 'list'; ingredients: string[]; cuisine: string; difficulty: Difficulty }
+  | { mode: 'freeform'; description: string; cuisine: string; difficulty: Difficulty };

@@ -11,12 +11,9 @@ const groq = new Groq({
 
 const MODEL = 'openai/gpt-oss-120b';
 
-export type GenerateRecipeInput = {
-  ingredients: string[];
-  cuisine: string;
-  difficulty: Difficulty;
-  locale: string;
-};
+export type GenerateRecipeInput =
+  | { mode: 'list'; ingredients: string[]; cuisine: string; difficulty: Difficulty; locale: string }
+  | { mode: 'freeform'; description: string; cuisine: string; difficulty: Difficulty; locale: string };
 
 const localeNames: Record<string, string> = {
   en: 'English',
@@ -27,7 +24,12 @@ const localeNames: Record<string, string> = {
 function buildPrompt(input: GenerateRecipeInput): string {
   const languageName = localeNames[input.locale] ?? 'English';
 
-  return `You are a recipe generator. Create a recipe using these ingredients: ${input.ingredients.join(', ')}.
+  const sourceInstruction =
+    input.mode === 'list'
+      ? `Create a recipe using these ingredients: ${input.ingredients.join(', ')}.`
+      : `The user described what they have available in loose, informal terms: "${input.description}". Infer a reasonable, specific ingredient list from this description (assume common pantry staples like salt, oil, and water are available unless the description suggests otherwise).`;
+
+  return `You are a recipe generator. ${sourceInstruction}
 Cuisine preference: ${input.cuisine === 'any' ? 'no preference' : input.cuisine}.
 Difficulty: ${input.difficulty}.
 
@@ -83,9 +85,7 @@ export async function generateRecipe(input: GenerateRecipeInput): Promise<Recipe
     });
 
     const rawText = completion.choices[0]?.message?.content;
-    if (!rawText) {
-      continue;
-    }
+    if (!rawText) continue;
 
     const parsed = parseRecipeResponse(rawText);
 
@@ -93,7 +93,6 @@ export async function generateRecipe(input: GenerateRecipeInput): Promise<Recipe
       const { locale, ...recipe } = parsed;
       return recipe;
     }
-    // Если язык не совпал или JSON битый — пробуем ещё раз (maxAttempts попыток).
   }
 
   throw new Error('Failed to generate a valid recipe after multiple attempts');

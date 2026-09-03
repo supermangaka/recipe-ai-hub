@@ -2,15 +2,15 @@
 
 import { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { RecipeForm, RecipeFormValues } from '@/components/RecipeForm';
+import { RecipeForm } from '@/components/RecipeForm';
 import { RecipeCard } from '@/components/RecipeCard';
-import { Recipe } from '@/types/recipe';
+import { Recipe, RecipeFormValues } from '@/types/recipe';
 
 export default function GeneratePage() {
   const t = useTranslations('GeneratePage');
   const locale = useLocale();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
-  const [lastValues, setLastValues] = useState<RecipeFormValues | null>(null);
+  const [lastPrompt, setLastPrompt] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isFavorited, setIsFavorited] = useState(false);
@@ -35,7 +35,7 @@ export default function GeneratePage() {
 
       const data = await response.json();
       setRecipe(data.recipe);
-      setLastValues(values);
+      setLastPrompt(values.mode === 'list' ? values.ingredients.join(', ') : values.description);
     } catch {
       setError(t('errorGeneration'));
     } finally {
@@ -44,7 +44,7 @@ export default function GeneratePage() {
   }
 
   async function handleFavorite() {
-    if (!recipe || !lastValues) return;
+    if (!recipe) return;
     setIsSavingFavorite(true);
 
     try {
@@ -60,14 +60,11 @@ export default function GeneratePage() {
           cuisine: recipe.cuisine,
           difficulty: recipe.difficulty,
           locale,
-          rawPrompt: lastValues.ingredients.join(', '),
+          rawPrompt: lastPrompt,
         }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to save favorite');
-      }
-
+      if (!response.ok) throw new Error('Failed to save favorite');
       setIsFavorited(true);
     } catch {
       setError(t('errorFavorite'));
